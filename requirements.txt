@@ -1,0 +1,12 @@
+# Core statistical verification & figure reproduction (CPU-only, < 5s install)
+numpy>=1.24.0
+pandas>=2.0.0
+scipy>=1.10.0
+scikit-learn>=1.3.0
+matplotlib>=3.7.0
+
+# Optional: Full LLM GPU inference on Google Colab T4 (auto-installed in notebook)
+# torch>=2.2.0
+# transformers>=4.44.0
+# accelerate>=0.33.0
+# bitsandbytes>=0.43.0

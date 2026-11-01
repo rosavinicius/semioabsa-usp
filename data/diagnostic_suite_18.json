@@ -1,0 +1,200 @@
+[
+  {
+    "sentence_id": "diag_01",
+    "domain": "restaurant",
+    "phenomenon": "Sarcasm / Metaphor",
+    "text": "The food is decent, but the service is an absolute joke.",
+    "aspect": "service",
+    "gold_polarity": "negative",
+    "gold_v": 2.0,
+    "gold_a": 7.6,
+    "gold_tensive": "EXTINÇÃO"
+  },
+  {
+    "sentence_id": "diag_01",
+    "domain": "restaurant",
+    "phenomenon": "Mixed Polarity / Concession",
+    "text": "The food is decent, but the service is an absolute joke.",
+    "aspect": "food",
+    "gold_polarity": "positive",
+    "gold_v": 6.0,
+    "gold_a": 4.8,
+    "gold_tensive": "ATENUAÇÃO"
+  },
+  {
+    "sentence_id": "diag_02",
+    "domain": "laptop",
+    "phenomenon": "Litotes / Negative Dominance",
+    "text": "The screen is not the worst I have seen, yet it is far from impressive for a pro machine.",
+    "aspect": "screen",
+    "gold_polarity": "negative",
+    "gold_v": 3.5,
+    "gold_a": 4.6,
+    "gold_tensive": "MINIMIZAÇÃO"
+  },
+  {
+    "sentence_id": "diag_03",
+    "domain": "restaurant",
+    "phenomenon": "Cumulative Euphoria",
+    "text": "All the appetizers were fabulous, the steak was mouth-watering and the sauces were divine!",
+    "aspect": "steak",
+    "gold_polarity": "positive",
+    "gold_v": 8.5,
+    "gold_a": 7.9,
+    "gold_tensive": "REDOBRAMENTO"
+  },
+  {
+    "sentence_id": "diag_04",
+    "domain": "laptop",
+    "phenomenon": "Hyperbolic Metaphor",
+    "text": "Great battery life, although the cooling fan sounds like a jet engine taking off.",
+    "aspect": "cooling fan",
+    "gold_polarity": "negative",
+    "gold_v": 2.2,
+    "gold_a": 7.8,
+    "gold_tensive": "MINIMIZAÇÃO"
+  },
+  {
+    "sentence_id": "diag_05",
+    "domain": "restaurant",
+    "phenomenon": "Atonic Containment",
+    "text": "The pizza was edible, nothing more, nothing less.",
+    "aspect": "pizza",
+    "gold_polarity": "neutral",
+    "gold_v": 5.0,
+    "gold_a": 3.4,
+    "gold_tensive": "CONSTATAÇÃO_ÁTONA"
+  },
+  {
+    "sentence_id": "diag_06",
+    "domain": "restaurant",
+    "phenomenon": "Antiphrastic Irony",
+    "text": "Sure, paying fifty dollars for soggy cold fries was definitely the highlight of my evening.",
+    "aspect": "fries",
+    "gold_polarity": "negative",
+    "gold_v": 1.5,
+    "gold_a": 7.7,
+    "gold_tensive": "EXTINÇÃO"
+  },
+  {
+    "sentence_id": "diag_07",
+    "domain": "laptop",
+    "phenomenon": "Positive with Minor Caveat",
+    "text": "I really love typing on this keyboard, even though the backlight is slightly uneven.",
+    "aspect": "keyboard",
+    "gold_polarity": "positive",
+    "gold_v": 6.6,
+    "gold_a": 5.6,
+    "gold_tensive": "ATENUAÇÃO"
+  },
+  {
+    "sentence_id": "diag_08",
+    "domain": "restaurant",
+    "phenomenon": "Enunciative Overflow (2nd Person)",
+    "text": "Forget ordinary dining: you MUST experience their tasting menu at least once in your life, you will fall in love!",
+    "aspect": "tasting menu",
+    "gold_polarity": "positive",
+    "gold_v": 8.9,
+    "gold_a": 8.6,
+    "gold_tensive": "SATURAÇÃO"
+  },
+  {
+    "sentence_id": "diag_09",
+    "domain": "laptop",
+    "phenomenon": "Concessive Minimization",
+    "text": "Despite the sleek aluminum chassis, the motherboard died after two weeks; I am never buying this brand again.",
+    "aspect": "motherboard",
+    "gold_polarity": "negative",
+    "gold_v": 1.3,
+    "gold_a": 8.2,
+    "gold_tensive": "EXTINÇÃO"
+  },
+  {
+    "sentence_id": "diag_09",
+    "domain": "laptop",
+    "phenomenon": "Concessive Minimization",
+    "text": "Despite the sleek aluminum chassis, the motherboard died after two weeks; I am never buying this brand again.",
+    "aspect": "aluminum chassis",
+    "gold_polarity": "positive",
+    "gold_v": 6.4,
+    "gold_a": 5.2,
+    "gold_tensive": "ATENUAÇÃO"
+  },
+  {
+    "sentence_id": "diag_10",
+    "domain": "restaurant",
+    "phenomenon": "Nascent Recovery (Restabelecimento)",
+    "text": "Our main course arrived completely burnt, but the manager apologized sincerely and comped our meal, so we might give them another try.",
+    "aspect": "manager",
+    "gold_polarity": "positive",
+    "gold_v": 6.5,
+    "gold_a": 5.8,
+    "gold_tensive": "RESTABELECIMENTO"
+  },
+  {
+    "sentence_id": "diag_10",
+    "domain": "restaurant",
+    "phenomenon": "Nascent Recovery (Restabelecimento)",
+    "text": "Our main course arrived completely burnt, but the manager apologized sincerely and comped our meal, so we might give them another try.",
+    "aspect": "main course",
+    "gold_polarity": "negative",
+    "gold_v": 2.3,
+    "gold_a": 6.7,
+    "gold_tensive": "MINIMIZAÇÃO"
+  },
+  {
+    "sentence_id": "diag_11",
+    "domain": "laptop",
+    "phenomenon": "Colloquial Idiom ('a steal')",
+    "text": "Don't expect luxury materials, but for this price tag, the laptop is an absolute steal.",
+    "aspect": "price tag",
+    "gold_polarity": "positive",
+    "gold_v": 7.8,
+    "gold_a": 7.1,
+    "gold_tensive": "ATENUAÇÃO"
+  },
+  {
+    "sentence_id": "diag_12",
+    "domain": "laptop",
+    "phenomenon": "Factual / Neutral Statement",
+    "text": "The laptop comes pre-installed with Windows 11 and two USB-C ports on the left side.",
+    "aspect": "USB-C ports",
+    "gold_polarity": "neutral",
+    "gold_v": 5.1,
+    "gold_a": 3.8,
+    "gold_tensive": "CONSTATAÇÃO_ÁTONA"
+  },
+  {
+    "sentence_id": "diag_13",
+    "domain": "restaurant",
+    "phenomenon": "Direct Positive",
+    "text": "Fresh ingredients, generous portions, and wonderfully friendly staff.",
+    "aspect": "staff",
+    "gold_polarity": "positive",
+    "gold_v": 8.1,
+    "gold_a": 7.4,
+    "gold_tensive": "REDOBRAMENTO"
+  },
+  {
+    "sentence_id": "diag_14",
+    "domain": "laptop",
+    "phenomenon": "Rhetorical Sarcasm",
+    "text": "Oh wonderful, another system update that bricks my Wi-Fi driver right before a presentation.",
+    "aspect": "Wi-Fi driver",
+    "gold_polarity": "negative",
+    "gold_v": 1.6,
+    "gold_a": 8.1,
+    "gold_tensive": "EXTINÇÃO"
+  },
+  {
+    "sentence_id": "diag_15",
+    "domain": "restaurant",
+    "phenomenon": "Post-Failure Tentative Hope",
+    "text": "The wait time was atrocious, though their new reservation system at least shows some promise of fixing the chaos.",
+    "aspect": "wait time",
+    "gold_polarity": "negative",
+    "gold_v": 2.8,
+    "gold_a": 6.4,
+    "gold_tensive": "RESTABELECIMENTO"
+  }
+]

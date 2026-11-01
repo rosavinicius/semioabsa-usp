@@ -1,0 +1,137 @@
+# RELATÓRIO CIENTÍFICO DE INSIGHTS — EXPERIMENTO SEMIOABSA (IC SEMIOCOM / FFLCH-USP)
+- Modelo Avaliado: `Qwen/Qwen2.5-3B-Instruct` em `CUDA` (Decodificação Determinística Greedy, Seed=2026)
+- Total de Instâncias Avaliadas: N = 78 aspectos (71 sentenças distintas)
+- Auditoria Anti-Vazamento: APROVADA (0% de sobreposição com `first_200_records.csv` ou `train_alltasks`; apenas dev oficial `rest26_*`/`lap26_*` + suíte diagnóstica).
+
+## 1. Tabela Comparativa Global (Métrica Oficial SemEval-2026 DimABSA)
+                  Métrica Condição A (Baseline) Condição A2 (CoT Lexical) Condição B (Semiótica Tensiva)
+       Cobertura JSON (%)                100.0%                    100.0%                         100.0%
+      Acurácia Polaridade                0.8462                    0.9231                         0.8846
+           F1-Score Macro                0.6512                    0.7712                         0.7018
+        RMSE Valência (V)                1.0067                    1.2308                         1.6822
+         RMSE Arousal (A)                2.2345                    1.8544                         1.3039
+RMSE_VA Oficial (SemEval)                2.4507                    2.2257                         2.1284
+       PCC Valência (r_V)                0.9130                    0.8804                         0.7383
+        PCC Arousal (r_A)               -0.0521                    0.1999                         0.3980
+Dispersão Arousal (std_A)                0.7167                    0.6915                         1.2737
+
+## 2. Desempenho Estratificado por Complexidade Discursiva
+- **Recorte Tensivo/Difícil (Concessão, Figuras, Polaridade Mista, Disforia — N=51)**:
+  * Condição A (Baseline): Acc=0.7843 | F1=0.5820 | RMSE_VA=2.5325 | PCC_V=0.8765 | PCC_A=-0.0991
+  * Condição B (Tensiva):  Acc=0.8627 | F1=0.7228 | RMSE_VA=2.4869 | PCC_V=0.6125 | PCC_A=0.3275
+- **Recorte Direto/Controle (Literal sem Tensão Concessiva — N=27)**:
+  * Condição A (Baseline): Acc=0.9630 | RMSE_VA=2.2883 | PCC_A=0.0000
+  * Condição B (Tensiva):  Acc=0.9259 | RMSE_VA=1.1854 | PCC_A=0.4291
+
+## 3. Inferência Estatística (Cluster Bootstrap Pareado por Sentença — 2.000 Reamostragens)
+- Tensiva (B) vs. Baseline Direto (A): Delta RMSE_VA = -0.3242 [IC 95%: -0.7751, +0.1054] | Delta PCC_A = +0.4234 [IC 95%: +0.0963, +0.6790] | Probabilidade de Superioridade = 93.3%
+- Tensiva (B) vs. Controle CoT Lexical (A2): Delta RMSE_VA = -0.1047 [IC 95%: -0.5215, +0.3644] | Delta PCC_A = +0.1975 (isola o efeito específico da Semiótica Tensiva frente ao CoT comum)
+
+## 4. Validação Empírica da Curva de Zilberberg (Distribuição por Direção Tensiva de Silva, 2021)
+B_Categoria_Tensiva  n  V_medio_pred  A_medio_pred  V_medio_gold  A_medio_gold  Ganho_Medio_Euclid
+          ATENUAÇÃO  3         5.200         4.867         5.377         5.580               0.111
+  CONSTATAÇÃO_ÁTONA  2         5.000         5.000         5.900         5.050               0.518
+           EXTINÇÃO  2         1.000         8.800         3.000         7.000              -0.438
+        MINIMIZAÇÃO 24         2.496         5.163         3.345         6.509               0.164
+       REDOBRAMENTO 36         7.164         7.058         6.981         6.802               0.817
+   RESTABELECIMENTO  3         4.200         5.733         4.267         5.750               0.564
+          SATURAÇÃO  8         8.525         8.475         6.488         7.788               0.935
+
+## 5. Top 10 Casos onde a Semiótica Tensiva Corrigiu Falhas do Baseline (Ganhos Qualitativos)
+
+### [lap26_aspect_va_dev_153] Aspecto: `LAPTOP` (Disphoric / Neutral Nuance | Ganho Euclidiano = +4.56)
+- Sentença: "I DO NOT RECOMMEND BUYING THIS LAPTOP"
+- Gabarito Oficial: Polaridade=`negative` | V=2.12, A=8.12
+- Condição A (Baseline): Polaridade=`negative` | V=1.00, A=1.00 (Erro=7.21)
+- Condição B (Tensiva):  Categoria=`MINIMIZAÇÃO` | Polaridade=`negative` | V=2.50, A=5.50 (Erro=2.65)
+  * Diagnóstico Semiótico da LLM: The sentence expresses a predominantly negative sentiment towards the laptop, but with a slight concession, indicating a minimization of positive aspects.
+
+### [diag_08] Aspecto: `tasting menu` (Enunciative Overflow (2nd Person) | Ganho Euclidiano = +3.30)
+- Sentença: "Forget ordinary dining: you MUST experience their tasting menu at least once in your life, you will fall in love!"
+- Gabarito Oficial: Polaridade=`positive` | V=8.90, A=8.60 | Tensiva Esperada=`SATURAÇÃO`
+- Condição A (Baseline): Polaridade=`positive` | V=8.00, A=5.00 (Erro=3.71)
+- Condição B (Tensiva):  Categoria=`SATURAÇÃO` | Polaridade=`positive` | V=8.50, A=8.50 (Erro=0.41)
+  * Diagnóstico Semiótico da LLM: The sentence expresses an overwhelming, ecstatic enthusiasm towards the tasting menu, breaking away from typical review norms with phrases like 'you MUST experience' and 'you will fall in love!', indicating high valence and high tonic arousal.
+
+### [diag_03] Aspecto: `steak` (Cumulative Euphoria | Ganho Euclidiano = +2.67)
+- Sentença: "All the appetizers were fabulous, the steak was mouth-watering and the sauces were divine!"
+- Gabarito Oficial: Polaridade=`positive` | V=8.50, A=7.90 | Tensiva Esperada=`REDOBRAMENTO`
+- Condição A (Baseline): Polaridade=`positive` | V=7.00, A=5.00 (Erro=3.27)
+- Condição B (Tensiva):  Categoria=`SATURAÇÃO` | Polaridade=`positive` | V=8.50, A=8.50 (Erro=0.60)
+  * Diagnóstico Semiótico da LLM: The sentence expresses an overwhelming, ecstatic appreciation for the steak, which is the primary focus of the review and stands out as the most enthusiastically praised element.
+
+### [lap26_aspect_va_dev_114] Aspecto: `color` (Direct Standard | Ganho Euclidiano = +2.59)
+- Sentença: "Display has excellent color"
+- Gabarito Oficial: Polaridade=`positive` | V=7.67, A=7.83
+- Condição A (Baseline): Polaridade=`positive` | V=7.00, A=5.00 (Erro=2.91)
+- Condição B (Tensiva):  Categoria=`REDOBRAMENTO` | Polaridade=`positive` | V=7.40, A=8.00 (Erro=0.32)
+  * Diagnóstico Semiótico da LLM: The sentence uses pure, cumulative positive intensification without negative qualifiers, indicating a strong positive sentiment towards the color of the laptop display.
+
+### [diag_01] Aspecto: `service` (Sarcasm / Metaphor | Ganho Euclidiano = +2.50)
+- Sentença: "The food is decent, but the service is an absolute joke."
+- Gabarito Oficial: Polaridade=`negative` | V=2.00, A=7.60 | Tensiva Esperada=`EXTINÇÃO`
+- Condição A (Baseline): Polaridade=`negative` | V=2.33, A=4.67 (Erro=2.95)
+- Condição B (Tensiva):  Categoria=`MINIMIZAÇÃO` | Polaridade=`negative` | V=2.20, A=7.20 (Erro=0.45)
+  * Diagnóstico Semiótico da LLM: The sentence minimizes the service by qualifying it as 'an absolute joke' after praising the food, indicating a predominantly negative sentiment towards the service.
+
+### [rest26_aspect_va_dev_152] Aspecto: `It` (Direct Standard | Ganho Euclidiano = +2.44)
+- Sentença: "It was awesome , the service was amazing and we couldn't be more pleased"
+- Gabarito Oficial: Polaridade=`positive` | V=8.33, A=7.83
+- Condição A (Baseline): Polaridade=`positive` | V=7.00, A=5.00 (Erro=3.13)
+- Condição B (Tensiva):  Categoria=`SATURAÇÃO` | Polaridade=`positive` | V=8.50, A=8.50 (Erro=0.69)
+  * Diagnóstico Semiótico da LLM: Overwhelming euphoria breaks the standard review posture with ecstatic hyperbole, indicating a highly positive sentiment towards 'It'.
+
+### [lap26_aspect_va_dev_75] Aspecto: `laptop` (Direct Standard | Ganho Euclidiano = +1.84)
+- Sentença: "Overall , he is very pleased with this and says it is a high performance laptop"
+- Gabarito Oficial: Polaridade=`positive` | V=7.62, A=7.50
+- Condição A (Baseline): Polaridade=`positive` | V=7.00, A=5.00 (Erro=2.58)
+- Condição B (Tensiva):  Categoria=`REDOBRAMENTO` | Polaridade=`positive` | V=7.40, A=6.80 (Erro=0.73)
+  * Diagnóstico Semiótico da LLM: The sentence expresses pure, cumulative positive intensification without negative qualifiers, indicating a strong positive sentiment towards the laptop.
+
+### [rest26_aspect_va_dev_87] Aspecto: `food` (Direct Standard | Ganho Euclidiano = +1.84)
+- Sentença: "The service was outstanding and the food I'd say was some of the best in New Orleans"
+- Gabarito Oficial: Polaridade=`positive` | V=7.50, A=7.83
+- Condição A (Baseline): Polaridade=`positive` | V=7.00, A=5.00 (Erro=2.87)
+- Condição B (Tensiva):  Categoria=`REDOBRAMENTO` | Polaridade=`positive` | V=7.40, A=6.80 (Erro=1.03)
+  * Diagnóstico Semiótico da LLM: The sentence uses pure, cumulative positive intensification without negative qualifiers, indicating a strong positive sentiment towards the 'food' aspect.
+
+### [lap26_aspect_va_dev_190] Aspecto: `features` (Direct Standard | Ganho Euclidiano = +1.84)
+- Sentença: "All the features are nice on this laptop"
+- Gabarito Oficial: Polaridade=`positive` | V=7.67, A=7.50
+- Condição A (Baseline): Polaridade=`positive` | V=7.00, A=5.00 (Erro=2.59)
+- Condição B (Tensiva):  Categoria=`REDOBRAMENTO` | Polaridade=`positive` | V=7.40, A=6.80 (Erro=0.75)
+  * Diagnóstico Semiótico da LLM: The sentence uses pure, cumulative positive intensification without negative qualifiers, indicating a strong positive sentiment towards the 'features' of the laptop.
+
+### [rest26_aspect_va_dev_63] Aspecto: `entire staff` (Direct Standard | Ganho Euclidiano = +1.84)
+- Sentença: "The entire staff are really friendly"
+- Gabarito Oficial: Polaridade=`positive` | V=7.38, A=6.88
+- Condição A (Baseline): Polaridade=`positive` | V=7.00, A=5.00 (Erro=1.92)
+- Condição B (Tensiva):  Categoria=`REDOBRAMENTO` | Polaridade=`positive` | V=7.40, A=6.80 (Erro=0.08)
+  * Diagnóstico Semiótico da LLM: The sentence uses pure, cumulative positive intensification without negative qualifiers, indicating a high level of positivity.
+
+## 6. Top 5 Casos de Limitação / Sobre-interpretação Tensiva (Análise Crítica Honesta)
+
+### [diag_04] Aspecto: `cooling fan` (Hyperbolic Metaphor | Delta Euclidiano = -3.67)
+- Sentença: "Great battery life, although the cooling fan sounds like a jet engine taking off."
+- Gabarito Oficial: V=2.20, A=7.80 | Baseline: V=3.00, A=7.00 | Tensiva (`REDOBRAMENTO`): V=7.00, A=8.00
+  * Raciocínio Gerado: The sentence uses pure, cumulative positive intensification without negative qualifiers, praising the battery life while emphasizing the loudness of the cooling fan as 'like a jet engine taking off', indicating a strong positive sentiment towards the cooling fan despite its noise.
+
+### [diag_14] Aspecto: `Wi-Fi driver` (Rhetorical Sarcasm | Delta Euclidiano = -3.48)
+- Sentença: "Oh wonderful, another system update that bricks my Wi-Fi driver right before a presentation."
+- Gabarito Oficial: V=1.60, A=8.10 | Baseline: V=2.00, A=5.00 | Tensiva (`SATURAÇÃO`): V=8.20, A=7.80
+  * Raciocínio Gerado: The sentence expresses overwhelming euphoria ('wonderful') about a system update that has a catastrophic effect on the Wi-Fi driver, indicating a high valence and moderate arousal.
+
+### [rest26_aspect_va_dev_161] Aspecto: `servers` (Multi-Aspect Contrast | Delta Euclidiano = -3.35)
+- Sentença: "Cute place , nice servers and good food but dish sizes are waaaaay too small"
+- Gabarito Oficial: V=7.00, A=6.67 | Baseline: V=7.00, A=5.00 | Tensiva (`MINIMIZAÇÃO`): V=2.20, A=5.20
+  * Raciocínio Gerado: The sentence expresses a predominantly negative sentiment towards the servers, with a minor concession about the food being 'good' but the server service being 'waaaaay too small', indicating a minimization of the positive aspect.
+
+### [diag_09] Aspecto: `aluminum chassis` (Concessive Minimization | Delta Euclidiano = -2.79)
+- Sentença: "Despite the sleek aluminum chassis, the motherboard died after two weeks; I am never buying this brand again."
+- Gabarito Oficial: V=6.40, A=5.20 | Baseline: V=5.00, A=5.00 | Tensiva (`MINIMIZAÇÃO`): V=2.20, A=5.20
+  * Raciocínio Gerado: The sentence expresses a predominantly negative sentiment towards the aluminum chassis, as it is part of a larger negative experience (motherboard dying) and is minimized by the user's statement 'I am never buying this brand again.'
+
+### [diag_12] Aspecto: `USB-C ports` (Factual / Neutral Statement | Delta Euclidiano = -2.35)
+- Sentença: "The laptop comes pre-installed with Windows 11 and two USB-C ports on the left side."
+- Gabarito Oficial: V=5.10, A=3.80 | Baseline: V=5.00, A=5.00 | Tensiva (`REDOBRAMENTO`): V=7.00, A=6.80
+  * Raciocínio Gerado: The sentence uses pure, cumulative positive intensification without negative qualifiers, indicating a strong positive sentiment towards the USB-C ports.

@@ -1,0 +1,47 @@
+cff-version: 1.2.0
+message: "If you use SemioABSA (DSAA), our diagnostic suite, or empirical findings in your research, please cite it using the metadata below."
+type: software
+title: "SemioABSA: Aspect-Anchored Tensive Semiotics for Dimensional Aspect-Based Sentiment Analysis"
+abstract: >-
+  Open-science implementation and empirical validation of Aspect-Anchored Semiotic
+  Decomposition (DSAA), bridging Claude Zilberberg's Tensive Semiotics and Silva's
+  (2021, 2023) subjective quantifications with Large Language Models on SemEval-2026
+  Task 3 (DimABSA). Solves zero-shot Arousal collapse and Tensive Scope Spillover
+  without fine-tuning (RMSE_VA = 1.2926 global / 1.3033 official blind dev, p = 2.44e-19).
+authors:
+  - family-names: "Rosa"
+    given-names: "Vinicius de Andrade"
+    affiliation: "SemioCom / FFLCH, University of São Paulo (USP)"
+  - family-names: "Silva"
+    given-names: "Túlio Ferreira Leite da"
+    affiliation: "SemioCom / FFLCH, University of São Paulo (USP)"
+  - family-names: "Beividas"
+    given-names: "Waldir"
+    affiliation: "Department of Linguistics, FFLCH, University of São Paulo (USP)"
+version: 2.0.0
+date-released: 2026-11-01
+url: "https://github.com/rosavinicius/semioabsa-usp"
+repository-code: "https://github.com/rosavinicius/semioabsa-usp"
+license: MIT
+keywords:
+  - aspect-based-sentiment-analysis
+  - tensive-semiotics
+  - computational-semiotics
+  - large-language-models
+  - semeval-2026
+  - dimabsa
+  - valence-arousal
+  - explainable-ai
+preferred-citation:
+  type: report
+  title: "Contribuições da Semiótica para a Análise Aspectual de Sentimentos: Decomposição Semiótica Ancorada ao Aspecto (DSAA) no Espaço Valência-Arousal"
+  authors:
+    - family-names: "Rosa"
+      given-names: "Vinicius de Andrade"
+    - family-names: "Silva"
+      given-names: "Túlio Ferreira Leite da"
+    - family-names: "Beividas"
+      given-names: "Waldir"
+  institution:
+    name: "Faculdade de Filosofia, Letras e Ciências Humanas — Universidade de São Paulo (FFLCH-USP)"
+  year: 2026
